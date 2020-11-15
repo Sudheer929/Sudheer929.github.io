@@ -84,13 +84,6 @@
             walkAnimation = 'Fox_Run';
         }
 
-        function activateDino() {
-            walker = document.querySelector('#walker2');
-            fox = document.querySelector('#dino');
-            idleAnimation = 'Idle';
-            walkAnimation = 'Walk';
-        }
-
         function playAnimation(animation) {
             if (fox === document.querySelector('#dino')) {
                 sitting = animation.startsWith('Sit') && animation !== 'Sit_Up';
@@ -175,9 +168,6 @@
             tryAgain();
             for (const result of results) {
                 for (const { transcript } of Array.from(result)) {
-                    if (transcript.toLowerCase().includes('dino') || transcript.toLowerCase().includes('dina')) {
-                        activateDino();
-                    }
                     if (transcript.toLowerCase().includes('fox')) {
                         activateFox();
                     }
