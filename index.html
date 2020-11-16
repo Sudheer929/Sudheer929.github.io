@@ -22,14 +22,13 @@
             });
         },
         update: function (oldData) {
-            //
+            
         },
         tick: function () {
-            if (!this.raycaster) { return; }  // Not intersecting.
+            if (!this.raycaster) { return; } 
 
             let intersection = this.raycaster.components.raycaster.getIntersection(this.el);
             if (!intersection) { return; }
-            //console.log(intersection.point);
             this.data.target.setAttribute("position", intersection.point);
         }
     });
@@ -101,35 +100,26 @@
                 }
                 lastEvent = currentEvent;
 
-                const targetPosition = raycaster.components.cursor
-                  // this is broken in current A-Frame 1.0.x --> .intersection.point;
-                  .intersectedEventDetail.intersection.point;
+                const targetPosition = raycaster.components.cursor.intersectedEventDetail.intersection.point;
                 if (!walker.getAttribute('visible')) {
                     walker.setAttribute('visible', true);
                     walker.setAttribute('position', stringify(targetPosition));
                 } else {
                     const currentPosition = walker.object3D.position;
                     const distance = currentPosition.distanceTo(targetPosition);
-                    // face the right way
                     walker.object3D.lookAt(targetPosition);
-                    // make it look like it's walking
                     fox.setAttribute('animation-mixer', { clip: walkAnimation });
-                    // only add completion listener once
                     if (!walker.getAttribute('animation')) {
-                      // once it's there,
-                      walker.addEventListener('animationcomplete', () => { 
-                        // make it look like it's idle                    
+                      walker.addEventListener('animationcomplete', () => {         
                         fox.setAttribute('animation-mixer', { clip: idleAnimation });
                       });
                     }
-                    // set the animation in new A-Frame 1.0.x style
                     walker.setAttribute('animation', {
                       property: 'position',
-                      to: stringify(targetPosition), // just targetPosition doesn't work!?
+                      to: stringify(targetPosition), 
                       dur: distance * 3000,
                       easing: 'linear'                      
                     });
-                    // toggle marker color to show we're doing it 
                     marker.setAttribute('color', 'blue');
                     setTimeout(() => marker.setAttribute('color', 'green'), 350);
                 }
